@@ -1,6 +1,6 @@
-import { IValidationStepFor } from "../domain/validation-step-for";
-import { Operation } from "../domain/operation";
-import { ValidationStepResult } from "../domain/validation-step-result";
+import {IValidationStepFor} from '../domain/validation-step-for';
+import {Operation} from '../domain/operation';
+import {ValidationStepResult} from '../domain/validation-step-result';
 
 type Validator<TSelf, TItem> = (owner: TSelf, item: TItem) => boolean;
 

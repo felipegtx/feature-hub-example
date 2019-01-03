@@ -4,7 +4,7 @@ import {Operation} from './domain/operation';
 
 class TodoListV1 {
   items: Object[];
-  emitter: NanoEvents;
+  emitter: NanoEvents<any>;
 
   constructor() {
     this.items = [];
