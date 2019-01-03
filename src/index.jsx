@@ -4,11 +4,6 @@ import {FeatureAppContainer} from '@feature-hub/react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-/// Counter
-import counterDefinition from './counter/counter';
-import counterControlDefinition from './counter/counter-control';
-import counterDisplayDefinition from './counter/counter-display';
-
 /// Todo List
 import todoDefinition from './todo/todo-list';
 import todoListAdd from './todo/todo-list-add';
