@@ -26,15 +26,6 @@ ReactDOM.render(
   <div>
     <FeatureAppContainer
       manager={manager}
-      featureAppDefinition={counterControlDefinition}
-    />
-    <FeatureAppContainer
-      manager={manager}
-      featureAppDefinition={counterDisplayDefinition}
-    />
-    <hr />
-    <FeatureAppContainer
-      manager={manager}
       featureAppDefinition={todoListItems}
     />
     <FeatureAppContainer
