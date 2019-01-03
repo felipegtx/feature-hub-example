@@ -12,10 +12,11 @@ class TodoListV1 {
     this.add = this.add.bind(this);
   }
 
-  public add = (item: Object): boolean =>
-    this.safeExecute(() =>
+  public add(item: Object): boolean {
+    return this.safeExecute(() =>
       this.update([...this.items, this.validate(Operation.Add, item)])
     );
+  }
 
   public remove(item: Object): boolean {
     return this.safeExecute(() => {
@@ -49,7 +50,7 @@ class TodoListV1 {
     }
   }
 
-  subscribe(listener) {
+  subscribe(listener: any) {
     return this.emitter.on('update', listener);
   }
 
