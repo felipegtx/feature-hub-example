@@ -12,7 +12,6 @@ import './style.scss';
 
 const registry = new FeatureServiceRegistry({});
 
-registry.registerProviders([counterDefinition], 'counter-web-app');
 registry.registerProviders([todoDefinition], 'todo-list-web-app');
 
 const manager = new FeatureAppManager(registry, loadAmdModule);
@@ -26,7 +25,6 @@ ReactDOM.render(
     <FeatureAppContainer
       manager={manager}
       featureAppDefinition={todoListAdd}
-      // css={[{href: todoListCss}]}
     />
   </div>,
   document.getElementById('app')
