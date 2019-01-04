@@ -1,3 +1,8 @@
+/**
+ * Generic Singleton implementation
+ * 
+ * @see https://github.com/torokmark/design_patterns_in_typescript/tree/master/singleton
+ */
 export class SingletonFor<Type> {
   private ctor: {new (): Type};
   private _instance: Type;

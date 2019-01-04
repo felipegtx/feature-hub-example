@@ -1,7 +1,7 @@
-import {StepsValidatorFor} from './domain/steps-validator-for';
+import {StepsValidatorFor} from './validators/steps-validator-for';
 import {ItemNotNull} from './validators/item-not-null';
 import {ProxyValidator} from './validators/proxy-validator';
-import {Operation} from './domain/operation';
+import {Operation} from './validation/operation';
 import {SingletonFor} from '../helper/singleton-for';
 
 export class TodoListValidation extends StepsValidatorFor<Object> {
@@ -10,7 +10,7 @@ export class TodoListValidation extends StepsValidatorFor<Object> {
       new ItemNotNull(),
       new ProxyValidator<Object>(
         Operation.Add,
-        ($this, item) => !$this.getContext().includes(item),
+        (owner, item) => !owner.getContext().includes(item),
         'Duplicated Item'
       )
     );

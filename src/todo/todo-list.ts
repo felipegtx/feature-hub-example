@@ -1,8 +1,9 @@
 import NanoEvents from 'nanoevents';
 import {TodoListValidation} from './todo-list-item-validation';
-import {Operation} from './domain/operation';
+import {Operation} from './validation/operation';
+import {IContextRepoOwner} from './validation/context-repo-onwer';
 
-class TodoListV1 {
+class TodoListV1 implements IContextRepoOwner<Object> {
   items: Object[];
   emitter: NanoEvents<any>;
 
@@ -25,11 +26,18 @@ class TodoListV1 {
     });
   }
 
+  public getContext(): Object[] {
+    return this.items;
+  }
+
+  /// This could be replaced by:
+  /// - State
+  /// - Memento
   validate(operation: Operation, item: Object): Object {
     let validationResult = TodoListValidation.getInstance().validate(
       operation,
       item,
-      this.items
+      this
     );
 
     if (!validationResult.allOk()) {

@@ -1,5 +1,13 @@
 export default (function() {
-  function DOMElementProxy(ele) {
+
+  /**
+   * Properly manipulates the a give DOM element in a cross-browser safe way
+   * 
+   * @param {DOMElement} ele The DOM element instance manipulated by this instance
+   * 
+   * @see https://github.com/torokmark/design_patterns_in_typescript/tree/master/facade
+   */
+  function DOMElementFacade(ele) {
     return {
       innerHTML: function(str) {
         ele.innerHTML = str;
@@ -38,13 +46,18 @@ export default (function() {
     };
   }
 
+  /**
+   * Creates a new instance of the facade object that handles the DOM iteraction 
+   * 
+   * @see https://github.com/torokmark/design_patterns_in_typescript/tree/master/factory_method
+   */
   return {
     create: function(elementType) {
       const ele =
         typeof elementType === 'string'
           ? document.createElement(elementType)
           : elementType;
-      return new DOMElementProxy(ele);
+      return new DOMElementFacade(ele);
     },
     createButton: function(text, delegate) {
       return this.create('button')
