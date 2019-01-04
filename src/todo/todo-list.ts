@@ -1,70 +1,79 @@
 import NanoEvents from 'nanoevents';
-import {TodoListValidation} from './todo-list-item-validation';
 import {Operation} from './validation/operation';
 import {IContextRepoOwner} from './validation/context-repo-onwer';
+import Memento from '../helper/memento';
+import TodoListItem from './todo-list-item';
+import TodoListItemValidation from './todo-list-item-validation';
+import TodoListValidation from './todo-list-validation';
 
-class TodoListV1 implements IContextRepoOwner<Object> {
-  items: Object[];
+class TodoListV1 implements IContextRepoOwner<TodoListItem> {
+  items: TodoListItem[];
   emitter: NanoEvents<any>;
 
   constructor() {
     this.items = [];
     this.emitter = new NanoEvents();
     this.add = this.add.bind(this);
+    this.getContext = this.getContext.bind(this);
   }
 
-  public add(item: Object): boolean {
-    return this.safeExecute(() =>
-      this.update([...this.items, this.validate(Operation.Add, item)])
+  public getContext(): TodoListItem[] {
+    return [...this.items];
+  }
+
+  public addText(text: string): boolean {
+    return this.add(new TodoListItem(text));
+  }
+
+  public add(item: TodoListItem): boolean {
+    return this.update([...this.items, item]);
+  }
+
+  public remove(item: TodoListItem): boolean {
+    return this.update(this.items.filter(i => i !== item));
+  }
+
+  public update(newContext: TodoListItem[]): boolean {
+    return Memento.safeExecute(
+      this.getContext,
+      context => {
+        
+        /// Validate new items
+        newContext
+          .filter(i => context.indexOf(i) < 0)
+          .forEach(newItem =>
+            TodoListItemValidation.getInstance().validate(
+              Operation.Add,
+              newItem,
+              this
+            )
+          );
+
+        /// Validate removed items
+        context
+          .filter(i => newContext.indexOf(i) < 0)
+          .forEach(deletedItem =>
+            TodoListItemValidation.getInstance().validate(
+              Operation.Remove,
+              deletedItem,
+              this
+            )
+          );
+
+        /// We rely on the Memento's approach to keep the context information valid
+        TodoListValidation.getInstance().validateCommit(
+          (this.items = newContext),
+          this
+        );
+
+        this.emitter.emit('update');
+      },
+      (context, err) => (this.items = context)
     );
-  }
-
-  public remove(item: Object): boolean {
-    return this.safeExecute(() => {
-      item = this.validate(Operation.Remove, item);
-      this.update(this.items.filter(i => i !== item));
-    });
-  }
-
-  public getContext(): Object[] {
-    return this.items;
-  }
-
-  /// This could be replaced by:
-  /// - State
-  /// - Memento
-  validate(operation: Operation, item: Object): Object {
-    let validationResult = TodoListValidation.getInstance().validate(
-      operation,
-      item,
-      this
-    );
-
-    if (!validationResult.allOk()) {
-      throw validationResult.errors().join('\n');
-    }
-
-    return item;
-  }
-
-  safeExecute(what: () => void): boolean {
-    try {
-      what();
-      return true;
-    } catch (e) {
-      alert(e);
-      console.log(e);
-      return false;
-    }
   }
 
   subscribe(listener: any) {
     return this.emitter.on('update', listener);
-  }
-
-  update(newItems: Object[]) {
-    this.items = newItems;
-    this.emitter.emit('update');
   }
 }
 

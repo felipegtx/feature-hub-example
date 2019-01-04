@@ -1,5 +1,6 @@
 export enum Operation {
   Add,
   Remove,
-  Any
+  Any,
+  Commit
 }

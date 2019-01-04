@@ -1,26 +1,39 @@
 import {StepsValidatorFor} from './validators/steps-validator-for';
 import {ItemNotNull} from './validators/item-not-null';
-import {ProxyValidator} from './validators/proxy-validator';
+import {ValidatorProxy} from './validators/validator-proxy';
 import {Operation} from './validation/operation';
 import {SingletonFor} from '../helper/singleton-for';
+import TodoListItem from './todo-list-item';
 
-export class TodoListValidation extends StepsValidatorFor<Object> {
+const itemContainsOnlyNumbersOnAdd = new ValidatorProxy<TodoListItem>(
+  Operation.Add,
+  (owner, item) => item.text.length > 2,
+  'The text should be at least two characters long.'
+);
+
+const cantRemoveLastElement = new ValidatorProxy<TodoListItem>(
+  Operation.Remove,
+  (owner, item) => {
+    let context = owner.getContext();
+    return context.length <= 1 || context.indexOf(item) !== context.length - 1;
+  },
+  "You can't delete the last item in the list."
+);
+
+export default class TodoListItemValidation extends StepsValidatorFor<TodoListItem> {
   constructor() {
     super(
       new ItemNotNull(),
-      new ProxyValidator<Object>(
-        Operation.Add,
-        (owner, item) => !owner.getContext().includes(item),
-        'Duplicated Item'
-      )
+      itemContainsOnlyNumbersOnAdd,
+      cantRemoveLastElement
     );
   }
 
-  private static _instance: SingletonFor<TodoListValidation> = new SingletonFor(
-    TodoListValidation
+  private static _instance: SingletonFor<TodoListItemValidation> = new SingletonFor(
+    TodoListItemValidation
   );
 
-  static getInstance(): TodoListValidation {
-    return TodoListValidation._instance.getInstance();
+  static getInstance(): TodoListItemValidation {
+    return TodoListItemValidation._instance.getInstance();
   }
 }

@@ -12,7 +12,7 @@ function TodoListDisplay({list}) {
   for (let i = 0; i < items.length; i++) {
     rows.push(
       <div key={i}>
-        <label>{items[i]}</label>
+        <label>{items[i].text}</label>
         <button onClick={() => list.remove(items[i])}>X</button>
       </div>
     );

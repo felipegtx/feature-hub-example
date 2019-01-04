@@ -15,21 +15,34 @@ export class StepsValidatorFor<TItem> {
     this.steps = steps;
   }
 
+  public validateCommit(
+    items: TItem[],
+    owner: IContextOwner<TItem>,
+    autoCheck: boolean = true
+  ): ValidationStepResultData {
+    return ValidationStepResultData.from(
+      items.map(item => this.validate(Operation.Commit, item, owner, autoCheck))
+    );
+  }
+
   public validate(
     operation: Operation,
     item: TItem,
-    owner: IContextOwner<TItem>
+    owner: IContextOwner<TItem>,
+    autoCheck: boolean = true
   ): ValidationStepResultData {
     return new ValidationStepResultData(
       this.steps.map(step => {
         if (
+          operation == Operation.Any ||
           step.operationScope() == Operation.Any ||
           step.operationScope() === operation
         ) {
           return step.validate(owner, item);
         }
         return null;
-      })
+      }),
+      autoCheck
     );
   }
 }

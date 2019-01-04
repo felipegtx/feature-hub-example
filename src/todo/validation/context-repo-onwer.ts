@@ -8,4 +8,5 @@ import {IContextOwner} from './context-owner';
 export interface IContextRepoOwner<TItem> extends IContextOwner<TItem> {
   add(item: TItem): boolean;
   remove(item: TItem): boolean;
+  update(items: TItem[]): boolean;
 }

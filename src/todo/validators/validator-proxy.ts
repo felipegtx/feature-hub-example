@@ -15,7 +15,7 @@ type Validator<TItem> = (owner: IContextOwner<TItem>, item: TItem) => boolean;
  *
  * @see https://github.com/torokmark/design_patterns_in_typescript/tree/master/proxy
  */
-export class ProxyValidator<TItem> implements IValidationStepFor<TItem> {
+export class ValidatorProxy<TItem> implements IValidationStepFor<TItem> {
   constructor(
     private operation: Operation,
     private validator: Validator<TItem>,

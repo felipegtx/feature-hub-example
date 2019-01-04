@@ -15,7 +15,7 @@ export default {
         let input = $dom.createInput('New item text').appendChildTo(container);
         $dom
           .createButton('New', () => {
-            todoListV1.add(input.val());
+            todoListV1.addText(input.val());
             input.val('').focus();
           })
           .appendChildTo(container);
