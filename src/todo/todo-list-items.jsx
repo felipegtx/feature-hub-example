@@ -5,10 +5,7 @@ class TodoListDisplay extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      items: [],
-      hasError: false
-    };
+    this.state = {items: []};
 
     this.remove = this.remove.bind(this);
     this.setState = this.setState.bind(this);
