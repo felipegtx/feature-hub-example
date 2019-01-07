@@ -1,28 +1,49 @@
 import * as React from 'react';
 import styles from './todo-list.scss';
 
-const {useEffect, useState} = React;
+class TodoListDisplay extends React.Component {
+  constructor(props) {
+    super(props);
 
-function TodoListDisplay({list}) {
-  const [items, setState] = useState(list.items);
+    this.state = {
+      items: [],
+      hasError: false
+    };
 
-  useEffect(() => list.subscribe(() => setState(list.items)), [list]);
+    this.remove = this.remove.bind(this);
+    this.setState = this.setState.bind(this);
+  }
 
-  let rows = [];
-  for (let i = 0; i < items.length; i++) {
-    rows.push(
-      <div key={i}>
-        <label>{items[i].text}</label>
-        <button onClick={() => list.remove(items[i])}>X</button>
-      </div>
+  componentWillMount() {
+    this.props.list.subscribe(() =>
+      this.setState({
+        items: this.props.list.items
+      })
     );
   }
 
-  return (
-    <div className={styles.list}>
-      {rows.length > 0 ? rows : 'Nothing to display'}
-    </div>
-  );
+  remove(item) {
+    this.props.list.remove(item);
+  }
+
+  render() {
+    let items = this.state.items;
+
+    if (items.length === 0) {
+      return 'Nothing to display';
+    }
+
+    return (
+      <div className={styles.list}>
+        {items.map((item, i) => (
+          <div key={i}>
+            <label>{item.text}</label>
+            <button onClick={() => this.remove(item)}>X</button>
+          </div>
+        ))}
+      </div>
+    );
+  }
 }
 
 export default {
