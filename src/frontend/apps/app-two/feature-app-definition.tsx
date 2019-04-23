@@ -3,7 +3,7 @@ import * as React from 'react';
 import AppComponent from '../../components/app-component';
 
 export default {
-  id: 'my-app-two:simple-component',
+  id: 'my-app-two:root',
 
   dependencies: {
     featureServices: {
