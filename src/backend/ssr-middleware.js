@@ -17,7 +17,7 @@ module.exports = function ssrMiddleware(fallback, port) {
 
       res.send(
         createDocumentHtml(
-          `<div id="my-app">${appHtml}</div>`,
+          `<div id="my-apps">${appHtml}</div>`,
           serializedStates,
           urlsForHydration,
         ),

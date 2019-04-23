@@ -33,7 +33,7 @@ function getUrlsForHydrationFromDom(): string[] {
   defineExternals({ react: React });
 
   const { featureAppManager, featureServices } = createFeatureHub(
-    'my-app:integrator',
+    'my-micro-frontend:integrator',
     {
       moduleLoader: loadAmdModule,
       providedExternals: { react: '16.8.0' },
@@ -61,8 +61,9 @@ function getUrlsForHydrationFromDom(): string[] {
 
   ReactDOM.hydrate(
     <FeatureHubContextProvider value={{ featureAppManager }}>
-      <App />
+      <App appName='app1' />
+      <App appName='app2' />
     </FeatureHubContextProvider>,
-    document.querySelector('#my-app'),
+    document.querySelector('#my-apps'),
   );
 })().catch(console.error);

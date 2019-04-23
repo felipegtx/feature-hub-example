@@ -10,7 +10,7 @@ const AppService = require('../frontend/services/app-service');
 
 module.exports = async function renderApp({ port }) {
   const { featureAppManager, featureServices } = createFeatureHub(
-    'my-app:integrator-node',
+    'my-micro-frontend:integrator-node',
     {
       moduleLoader: loadCommonJsModule,
       providedExternals: { react: '16.8.0' },
@@ -47,9 +47,15 @@ module.exports = async function renderApp({ port }) {
     .renderUntilCompleted(() => {
       const reactElement = React.createElement(FeatureHubContextProvider, {
         value: featureHubContextValue,
-      }, React.createElement(App, {
-        port,
-      }));
+      }, 
+      
+      /// App1.js
+      React.createElement(App, { appName: 'app1', port }), 
+
+      /// App2.js
+      React.createElement(App, { appName: 'app2', port }),
+      
+      );
 
       const elementStr = ReactDOM.renderToString(reactElement);
 

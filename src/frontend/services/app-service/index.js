@@ -1,6 +1,6 @@
 
 const AppService = {
-  id: 'my-app:my-service',
+  id: 'my-services:my-service-one',
 
   optionalDependencies: {
     featureServices: { 's2:async-ssr-manager': '^1.0.0' },
