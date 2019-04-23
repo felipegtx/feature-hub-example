@@ -52,6 +52,9 @@ module.exports = async function renderApp({ port }) {
       /// App1.js
       React.createElement(App, { appName: 'app1', port }), 
 
+     /// hr/
+     React.createElement('hr'), 
+
       /// App2.js
       React.createElement(App, { appName: 'app2', port }),
       

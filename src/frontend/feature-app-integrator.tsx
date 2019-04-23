@@ -62,6 +62,7 @@ function getUrlsForHydrationFromDom(): string[] {
   ReactDOM.hydrate(
     <FeatureHubContextProvider value={{ featureAppManager }}>
       <App appName='app1' />
+      <hr/>
       <App appName='app2' />
     </FeatureHubContextProvider>,
     document.querySelector('#my-apps'),

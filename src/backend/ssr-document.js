@@ -16,6 +16,15 @@ module.exports = {
       <head>
         <meta charset="utf-8">
         <title>My App</title>
+        <style>
+          body { 
+            font-family: monospace
+          }
+          hr { 
+            border-style: dashed;
+            color: #e0e0e0;
+          }
+        </style>
       </head>
       <body>
         ${bodyHtml}

@@ -1,6 +1,6 @@
 import { ReactFeatureApp } from '@feature-hub/react';
 import * as React from 'react';
-import AppComponent from './components/app-component';
+import AppComponent from '../../components/app-component';
 
 export default {
   id: 'my-app-two:simple-component',
@@ -19,7 +19,7 @@ export default {
       render: () => (
         <>
           <p>This is my second app</p>
-          <AppComponent serviceRef={myServiceV1} />       
+          <AppComponent fontColor='#67ad5c' serviceRef={myServiceV1} />       
         </>
       ),
     };

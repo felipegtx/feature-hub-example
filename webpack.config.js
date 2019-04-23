@@ -57,23 +57,29 @@ const configMerger = {
 };
 
 /**
+ * App definition for app1
  * @type {webpack.Configuration}
  */
-const featureAppOneConfig = configMerger.getReactApp('./src/frontend/feature-app-one-definition.tsx');
+const featureAppOneConfig = configMerger.getReactApp('./src/frontend/apps/app-one/feature-app-definition.tsx');
 
 /**
+ * App definition for app2
  * @type {webpack.Configuration}
  */
-const featureAppTwoConfig = configMerger.getReactApp('./src/frontend/feature-app-two-definition.tsx');
+const featureAppTwoConfig = configMerger.getReactApp('./src/frontend/apps/app-two/feature-app-definition.tsx');
 
 /**
+ * Final webpack configuration array
  * @type {webpack.Configuration[]}
  */
 const configs = [
+  
   configMerger.toUmd(featureAppOneConfig, 'app1'),
   configMerger.toCommonjs(featureAppOneConfig, 'app1'),
+
   configMerger.toUmd(featureAppTwoConfig, 'app2'),
   configMerger.toCommonjs(featureAppTwoConfig, 'app2'),
+
   merge.smart(webpackBaseConfig, {
     entry: path.join(__dirname, './src/frontend/feature-app-integrator.tsx'),
     output: {

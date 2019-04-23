@@ -4,16 +4,20 @@ import { ReactNode } from 'react';
 
 interface IAppComponentProps {
 	serviceRef: any;
+	fontColor: string;
 }
 
 export default class AppComponent extends React.Component<IAppComponentProps> {
 	render(): ReactNode {
-		const { serviceRef } = this.props;
+		const { serviceRef, fontColor } = this.props;
 		
 		serviceRef.log('My component!');
 	
 		return (
-			<div>Hello there!</div>
+			<div style={{ color: fontColor }} >
+				<p>Hello there!</p>
+				<p>From {serviceRef.isServer() ? 'server' : 'client' }</p>
+			</div>
 		);
 	}
 }
