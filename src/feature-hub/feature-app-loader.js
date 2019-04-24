@@ -7,17 +7,18 @@ function App({ appName, port }) {
     React.createElement(FeatureAppLoader, {
       src: `${appName}.js`,
       serverSrc: port ? `http://localhost:${port}/${appName}.commonjs.js` : '',
+      instanceConfig: require('./config.json')
     })
   );
 }
 
 App.propTypes = {
-  port: propTypes.string,
+  port: propTypes.number,
   appName: propTypes.string,
 };
 
 App.defaultProps = {
-  port: '3003',
+  port: 3003,
   appName: 'app'
 };
 

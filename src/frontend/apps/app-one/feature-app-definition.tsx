@@ -13,13 +13,14 @@ export default {
 
   create(env: any): ReactFeatureApp {
     const myServiceV1 = env.featureServices['my-services:my-service-one'];
+    const { app1: { fontColor } } = env.instanceConfig;
 		console.log(`Are we on the server for the first app? ${myServiceV1.isServer()}`);
 
     return {
       render: () => (
         <>
           <p>This is my first app</p>
-          <AppComponent fontColor='#6a5cca' serviceRef={myServiceV1} />       
+          <AppComponent fontColor={fontColor} serviceRef={myServiceV1} />       
         </>
       ),
     };
