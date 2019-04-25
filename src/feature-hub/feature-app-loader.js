@@ -3,11 +3,12 @@ const propTypes = require('prop-types');
 const React = require('react');
 
 function App({ appName, port }) {
+  const config = require('./config.json');
   return (
     React.createElement(FeatureAppLoader, {
       src: `${appName}.js`,
       serverSrc: port ? `http://localhost:${port}/${appName}.commonjs.js` : '',
-      instanceConfig: require('./config.json')
+      instanceConfig: config[appName]
     })
   );
 }
